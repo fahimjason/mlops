@@ -85,8 +85,12 @@ aws s3api put-bucket-versioning --bucket "${PIPELINE_BUCKET}" \
 git config --global user.name "<REPLACE_WITH_YOUR_GITHUB_USER_NAME>"
 git config --global user.email "<REPLACE_WITH_YOUR_GITHUB_USER_EMAIL>"
 
+# Set your GitHub username as a variable (Replace "your_github_username" with your GitHub username. Example: GITHUB_USERNAME="fahimjason")
+GITHUB_USERNAME="your_github_username"
+
+# Use the variable in the git clone command
 cd ~/environment &&\
-git clone https://git-codecommit.${AWS_DEFAULT_REGION}.amazonaws.com/v1/repos/mlops
+git clone https://github.com/$GITHUB_USERNAME/MLOps
 ```
 ## Create Container Image Repository in Elastic Container Registry
 - Create a Private Repository with repo name as `abalone`
@@ -118,7 +122,7 @@ git commit -m "initial commit of etl assets" &&\
 git push --set-upstream origin etl
 ```
 ## Training Assets
-![Alt text](image-2.png)
+![Alt text](https://raw.githubusercontent.com/fahimjason/mlops/refs/heads/resources/images/image-2.png)
 - Checkout to main branch
 ```
 git checkout -b main
@@ -140,15 +144,11 @@ cp -R ~/environment/model/* .
 sed -i "s/<AccountId>/${AWS_ACCOUNT_ID}/" ~/environment/mlops/trainingjob.json
 sed -i "s/<Region>/${AWS_DEFAULT_REGION}/" ~/environment/mlops/trainingjob.json
 ```
-- push the code to master branch
+- push the code to main branch
 ```
 git add . &&\
 git commit -m "Initial commit of model assets" &&\
 git push --set-upstream origin main
-```
-- set main branch as default
-```
-aws codecommit update-default-branch --repository-name mlops --default-branch-name master
 ```
 # Service Quota Request
 - ml.m5.xlarge, ml.m5.large for processing job usage - region = us-west-2
@@ -197,7 +197,7 @@ python app_test.py
 ```
 
 ## System Test Assets
-![](image-3.png)
+![Alt text](https://raw.githubusercontent.com/fahimjason/mlops/refs/heads/resources/images/image-3.png)
 
 - Create new Branch
 ```
@@ -224,7 +224,7 @@ git push --set-upstream origin test
 ```
 
 # 3. Pipeline Execution
-![Alt text](image-4.png)
+![Alt text](https://raw.githubusercontent.com/fahimjason/mlops/refs/heads/resources/images/image-4.png)
 ## Creation of pipeline
 ```
 unset parameters
@@ -250,7 +250,7 @@ aws s3 cp ~/environment/abalone.csv "s3://${DATA_BUCKET}/input/raw/abalone.csv" 
 ```
 aws cloudformation create-stack --stack-name abalone-pipeline \
 --template-body file://~/environment/pipeline/mlops-pipeline-output.yml \
---parameters $(printf "$parameters" "abalone" "latest" "abalone" "MLOps" "GitHub_Username") \
+--parameters $(printf "$parameters" "abalone" "latest" "abalone" "MLOps" $GITHUB_USERNAME) \
 --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
 
 
