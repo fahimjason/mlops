@@ -80,7 +80,7 @@ aws s3api put-bucket-versioning --bucket "${PIPELINE_BUCKET}" \
 
 ## Create GitHub Repository for Storage of code & artifacts
 - Create Repository in GitHub with name `mlops`
-- clone to local system
+- Clone to local system
 ```
 git config --global user.name "<REPLACE_WITH_YOUR_GITHUB_USER_NAME>"
 git config --global user.email "<REPLACE_WITH_YOUR_GITHUB_USER_EMAIL>"
@@ -94,6 +94,10 @@ git clone https://github.com/$GITHUB_USERNAME/MLOps
 ```
 ## Create Container Image Repository in Elastic Container Registry
 - Create a Private Repository with repo name as `abalone`
+
+## Create Secret in AWS Secrets Manager
+- Create a token for `mlops` Repository. If you don't know how to make it, [click here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
+- Use the secret key as `abalone` and use the `created token` as value. Make the secret name as `abalone-token`
 
 ## Validation
 - Validate S3 Bucket for Data
@@ -233,6 +237,15 @@ parameters="$parameters ParameterKey=ImageTagName,ParameterValue=%s"
 parameters="$parameters ParameterKey=ModelName,ParameterValue=%s"
 parameters="$parameters ParameterKey=RoleName,ParameterValue=%s"
 parameters="$parameters ParameterKey=GitHubUser,ParameterValue=%s"
+```
+
+
+- Modify the `mlops-pipeline.yml` as follows:
+    - *Replace Secret name with `abalone-token`*
+    - *Replace Secret Key with respective `abalone`*
+```
+sed -i "s/<Token>/abalone-token/" ~/environment/pipeline/mlops-pipeline.yml
+sed -i "s/<key>/abalone/" ~/environment/pipeline/mlops-pipeline.yml
 ```
 
 
