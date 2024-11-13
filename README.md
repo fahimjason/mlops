@@ -1,8 +1,11 @@
-# Use case
-![Alt text](image.png)
+# Resources
+[MLOps Roadmap](https://roadmap.sh/mlops) <br>
+[MLOps guide](https://huyenchip.com/mlops/#overview) - Chip Huyen <br>
+[MLOps with AWS - Bootcamp - Zero to Hero Series](https://www.udemy.com/course/practical-mlops-for-data-scientists-devops-engineers-aws/) - Udemy <br> 
+[Mathematics-Basics to Advanced for Data Science And GenAI](https://www.udemy.com/course/mathematics-basics-to-advanced-for-data-science-and-ml/) - Udemy 
 
 # Architecture 
-![Alt text](image-1.png)
+![Alt text](https://raw.githubusercontent.com/fahimjason/mlops/refs/heads/resources/images/mlops-poc-architecture.png)
 
 
 # Setting Up the AWS Account & Cloud9 for CLI
@@ -116,9 +119,9 @@ git push --set-upstream origin etl
 ```
 ## Training Assets
 ![Alt text](image-2.png)
-- Checkout to master branch
+- Checkout to main branch
 ```
-git checkout -b master
+git checkout -b main
 ```
 - Empty the branch
 ```
