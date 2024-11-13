@@ -282,3 +282,5 @@ sed -i "s/<PipelineBucket>/${PIPELINE_BUCKET}/" load_sim.py
 ```
 python3 load_sim.py
 ```
+
+### Thanks
